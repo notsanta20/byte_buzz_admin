@@ -2,6 +2,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
+import { useNavigate } from "react-router";
 
 const schema = z.object({
   username: z
@@ -15,6 +16,8 @@ const schema = z.object({
 });
 
 function Login() {
+  const navigate = useNavigate();
+
   const {
     register,
     handleSubmit,
@@ -24,7 +27,7 @@ function Login() {
     resolver: zodResolver(schema),
   });
 
-  function onSubmit(data) {
+  async function onSubmit(data) {
     const token = localStorage.getItem(`authToken`);
     const Authorization = `Bearer ${token}`;
     const header = {
@@ -34,10 +37,16 @@ function Login() {
     axios
       .post(`http://localhost:3000/login`, data, header)
       .then((res) => {
-        console.log(res);
+        localStorage.setItem(`authToken`, res.data.token);
+        navigate(`/posts`, { replace: true });
       })
       .catch((err) => {
-        console.log(err);
+        const message = err.response.data.message;
+        if (message === `Username does not exists`) {
+          setError("username", { message: `Username does not exists` });
+        } else if (message === `invalid Password`) {
+          setError("password", { message: `Password is not matching` });
+        }
       });
   }
 
@@ -57,7 +66,7 @@ function Login() {
             className="py-2 px-3 rounded-lg border-1 border-black dark:border-white"
             {...register(`username`)}
           />
-          <div className="text-red-600 h-4">
+          <div className="text-red-500 h-4">
             {typeof errors.username === `undefined`
               ? ``
               : errors.username.message}
@@ -73,14 +82,17 @@ function Login() {
             className="py-2 px-3 rounded-lg border-1 border-black dark:border-white"
             {...register(`password`)}
           />
-          <div className="text-red-600 h-4">
+          <div className="text-red-500 h-4">
             {typeof errors.password === `undefined`
               ? ``
               : errors.password.message}
           </div>
         </div>
-        <button className="py-2 px-3 border-1 border-black dark:border-white rounded-lg cursor-pointer">
-          Log In
+        <button
+          className="py-2 px-3 border-1 border-black dark:border-white rounded-lg cursor-pointer"
+          disabled={isSubmitting}
+        >
+          {isSubmitting ? `Loading` : `Log In`}
         </button>
       </form>
     </section>

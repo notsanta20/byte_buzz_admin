@@ -1,6 +1,7 @@
 import { Link } from "react-router";
+import HeaderButton from "./HeaderButton";
 
-function Header({ theme, setTheme }) {
+function Header({ theme, setTheme, auth, setAuth }) {
   function handleThemeChange() {
     if (theme) {
       setTheme(false);
@@ -19,8 +20,7 @@ function Header({ theme, setTheme }) {
           className="w-[18px] cursor-pointer"
           onClick={handleThemeChange}
         />
-        <Link to={`/login`}>Log In</Link>
-        <Link to={`/signup`}>Sign Up</Link>
+        <HeaderButton auth={auth} setAuth={setAuth} />
       </div>
     </header>
   );
