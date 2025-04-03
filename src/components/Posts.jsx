@@ -1,9 +1,8 @@
 import axios from "axios";
-import { useEffect } from "react";
-import { useOutletContext, useNavigate } from "react-router";
+import { useOutletContext, Link } from "react-router";
 
 function Posts() {
-  const [auth, data] = useOutletContext();
+  const [auth, data, setRefresh] = useOutletContext();
 
   if (auth) {
     const userId = data.user.id;
@@ -17,7 +16,10 @@ function Posts() {
       };
       axios
         .delete(`http://localhost:3000/post/${id}`, header)
-        .then((res) => {})
+        .then((res) => {
+          const num = Math.floor(Math.random);
+          setRefresh(num);
+        })
         .catch((err) => {
           console.log(err);
         });
@@ -25,7 +27,10 @@ function Posts() {
 
     return (
       <main>
-        <h1>posts</h1>
+        <div className="flex p-2">
+          <h1 className="flex-1 text-3xl font-bold text-center">ALL POSTS</h1>
+          <Link to={`/createPost`}>Create Post</Link>
+        </div>
         <ul className="grid grid-cols-3 gap-3">
           {posts.map((p) => (
             <li

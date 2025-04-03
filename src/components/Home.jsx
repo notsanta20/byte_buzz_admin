@@ -7,6 +7,7 @@ function Home() {
   const [darkTheme, setDarkTheme] = useState(false);
   const [data, setData] = useState([]);
   const [auth, setAuth] = useState(false);
+  const [refresh, setRefresh] = useState(``);
   const url = useLocation().pathname;
   const token = localStorage.getItem("authToken");
   const Authorization = `Bearer ${token}`;
@@ -24,7 +25,7 @@ function Home() {
       .catch((err) => {
         console.log(err);
       });
-  }, [url, auth]);
+  }, [url, auth, refresh]);
 
   return (
     <div
@@ -39,7 +40,7 @@ function Home() {
         auth={auth}
         setAuth={setAuth}
       />
-      <Outlet context={[auth, data]} />
+      <Outlet context={[auth, data, setRefresh]} />
     </div>
   );
 }
