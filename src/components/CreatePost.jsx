@@ -5,14 +5,15 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
 import { useNavigate } from "react-router";
+import DOMPurify from "dompurify";
 
 const schema = z.object({
-  title: z.string({ required_error: `title should not be empty` }).min(5, {
-    message: `title must be at least 5 characters`,
-  }),
-  article: z
-    .string({ required_error: `article cannot be empty` })
-    .min(20, { message: `Article need to be at least 20 characters` }),
+  title: z
+    .string()
+    .min(5, {
+      message: `Title must be at least 5 characters`,
+    })
+    .max(50, { message: `Title must not exceed 50 characters` }),
 });
 
 function CreatePost() {
@@ -28,21 +29,31 @@ function CreatePost() {
   });
 
   function handleOnSubmit(data) {
-    const token = localStorage.getItem(`authToken`);
-    const Authorization = `Bearer ${token}`;
-    const header = {
-      headers: { Authorization },
+    const clean = DOMPurify.sanitize(editorRef.current.getContent());
+    const articleData = {
+      title: data.title,
+      article: clean,
     };
+    if (articleData.article === ``) {
+      setError(`root`, { message: `Article cannot be empty` });
+    } else {
+      const token = localStorage.getItem(`authToken`);
+      const Authorization = `Bearer ${token}`;
+      const header = {
+        headers: { Authorization },
+      };
 
-    axios
-      .post(`http://localhost:3000/post`, data, header)
-      .then((res) => {
-        navigate(`/posts`, { replace: true });
-      })
-      .catch((err) => {
-        const mess = err.response.data.message;
-        setError(`article`, { message: mess });
-      });
+      axios
+        .post(`http://localhost:3000/post`, articleData, header)
+        .then((res) => {
+          console.log(res.data.message);
+          navigate(`/posts`, { replace: true });
+        })
+        .catch((err) => {
+          const mess = err.response.data.message;
+          setError(`root`, { message: mess });
+        });
+    }
   }
 
   return (
@@ -65,20 +76,45 @@ function CreatePost() {
             {typeof errors.title === `undefined` ? `` : errors.title.message}
           </div>
         </div>
-        <div className="flex flex-col gap-3">
-          <textarea
-            name="article"
-            id="article"
-            rows={10}
-            cols={50}
-            className="py-2 px-3 rounded-lg border-1 border-black dark:border-white"
-            {...register(`article`)}
-          ></textarea>
-          <div className="text-red-500 h-4">
-            {typeof errors.article === `undefined`
-              ? ``
-              : errors.article.message}
-          </div>
+        <Editor
+          apiKey="zvco1zy6o1lqoguf8kva3hx64r2jalfiixb66c8pvziyhy31"
+          onInit={(evt, editor) => (editorRef.current = editor)}
+          initialValue=""
+          init={{
+            height: 400,
+            width: 800,
+            menubar: false,
+            plugins: [
+              "advlist",
+              "autolink",
+              "lists",
+              "link",
+              "image",
+              "charmap",
+              "preview",
+              "anchor",
+              "searchreplace",
+              "visualblocks",
+              "code",
+              "fullscreen",
+              "insertdatetime",
+              "media",
+              "table",
+              "code",
+              "help",
+              "wordcount",
+            ],
+            toolbar:
+              "undo redo | blocks | " +
+              "bold italic forecolor | alignleft aligncenter " +
+              "alignright alignjustify | bullist numlist outdent indent | " +
+              "removeformat | help",
+            content_style:
+              "body { font-family:Helvetica,Arial,sans-serif; font-size:14px }",
+          }}
+        />
+        <div className="text-red-500 h-4">
+          {typeof errors.root === `undefined` ? `` : errors.root.message}
         </div>
         <button className="cursor-pointer py-2 px-3 rounded-lg border-1 border-black dark:border-white">
           Add Post
