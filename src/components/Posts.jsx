@@ -51,7 +51,7 @@ function Posts() {
                   Delete
                 </div>
               </div>
-              <div className="line-clamp-4 prose">
+              <div className="line-clamp-4 prose dark:prose-invert">
                 <div dangerouslySetInnerHTML={{ __html: p.article }} />
               </div>
             </li>

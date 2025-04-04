@@ -1,12 +1,32 @@
-# React + Vite
+<h3 align="center">Byte Buzz Admin</h3>
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+  <p align="center">
+    Byte Buzz Admin is a tool to manage the contents of the your blog. You can Create and Delete articles of your blog. This is created using React and Javascript with RESTful APIs created in Express server and it uses JSON Web Token for Authentication, React Router, React-Hook_Form, Zod, Axios, TinyMCE, DOMPurify under the hood.
+    <br />
+    <a href="" target="_blank">Live Demo</a>
+  </p>
+</div>
+<br>
 
-Currently, two official plugins are available:
+<!-- ABOUT THE PROJECT -->
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### Preview
 
-## Expanding the ESLint configuration
+<div align="center">
+ <img src="./public/preview.png">
+ <img src="./public/preview2.png">
+</div>
 
-If you are developing a production application, we recommend using TypeScript and enable type-aware lint rules. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### API
+
+The CMS fetches data from RESTful blog API. The source code for the API can be found at <a href="https://github.com/notsanta20/byte_buzz_api" target="_blank">Byte Buzz API</a>
+
+### Built With
+
+[![My Skills](https://skillicons.dev/icons?i=html,css,javascript,react,tailwindcss,vite)](https://skillicons.dev)
+
+<!-- ACKNOWLEDGMENTS -->
+
+## Acknowledgments
+
+- Inspiration by <a href="https://www.theodinproject.com/lessons/node-path-nodejs-blog-api" target="_blank">The Odin Project</a>
