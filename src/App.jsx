@@ -1,6 +1,6 @@
 import { Routes, Route } from "react-router";
 import Home from "./components/Home";
-import Index from "./components";
+import Index from "./components/Index";
 import Login from "./components/Login";
 import Signup from "./components/Signup";
 import Posts from "./components/Posts";
