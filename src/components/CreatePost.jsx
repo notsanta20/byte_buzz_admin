@@ -42,9 +42,10 @@ function CreatePost() {
       const header = {
         headers: { Authorization },
       };
+      const url = import.meta.env.VITE_SERVER_URL;
 
       axios
-        .post(`http://localhost:3000/post`, articleData, header)
+        .post(`${url}/post`, articleData, header)
         .then((res) => {
           console.log(res.data.message);
           navigate(`/posts`, { replace: true });
@@ -77,7 +78,7 @@ function CreatePost() {
           </div>
         </div>
         <Editor
-          apiKey="zvco1zy6o1lqoguf8kva3hx64r2jalfiixb66c8pvziyhy31"
+          apiKey={import.meta.env.VITE_EDITOR_KEY}
           onInit={(evt, editor) => (editorRef.current = editor)}
           initialValue=""
           init={{

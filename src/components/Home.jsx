@@ -16,8 +16,10 @@ function Home() {
   };
 
   useEffect(() => {
+    const url = import.meta.env.VITE_SERVER_URL;
+
     axios
-      .get(`http://localhost:3000/`, header)
+      .get(url, header)
       .then((res) => {
         setData(res.data);
         setAuth(res.data.auth);

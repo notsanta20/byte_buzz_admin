@@ -15,8 +15,10 @@ function Posts() {
       const header = {
         headers: { Authorization },
       };
+      const url = import.meta.env.VITE_SERVER_URL;
+
       axios
-        .delete(`http://localhost:3000/post/${id}`, header)
+        .delete(`${url}/post/${id}`, header)
         .then((res) => {})
         .catch((err) => {
           console.log(err);

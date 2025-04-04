@@ -41,9 +41,10 @@ function Signup() {
     const header = {
       headers: { Authorization },
     };
+    const url = import.meta.env.VITE_SERVER_URL;
 
     axios
-      .post(`http://localhost:3000/signup`, data, header)
+      .post(`${url}/signup`, data, header)
       .then((res) => {
         localStorage.setItem(`authToken`, res.data.token);
         navigate(`/login`, { replace: true });
