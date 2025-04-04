@@ -35,7 +35,7 @@ function Posts() {
         <ul className="grid grid-cols-3 gap-3">
           {posts.map((p) => (
             <li
-              className="flex flex-col justify-around gap-2 p-5 bg-gray-100 dark:bg-(--gray) rounded-lg min-h-[300px]"
+              className="flex flex-col gap-2 p-5 bg-gray-100 dark:bg-(--gray) rounded-lg min-h-[300px]"
               key={p.id}
             >
               <div className="flex items-center">

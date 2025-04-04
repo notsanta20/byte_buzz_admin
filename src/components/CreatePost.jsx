@@ -47,7 +47,6 @@ function CreatePost() {
       axios
         .post(`${url}/post`, articleData, header)
         .then((res) => {
-          console.log(res.data.message);
           navigate(`/posts`, { replace: true });
         })
         .catch((err) => {
