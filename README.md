@@ -21,6 +21,10 @@
 
 The CMS fetches data from RESTful blog API. The source code for the API can be found at <a href="https://github.com/notsanta20/byte_buzz_api" target="_blank">Byte Buzz API</a>
 
+### CLIENT
+
+The Client has can accessed from here <a href="https://github.com/notsanta20/byte_buzz_client" target="_blank">Byte Buzz Client</a>
+
 ### Built With
 
 [![My Skills](https://skillicons.dev/icons?i=html,css,javascript,react,tailwindcss,vite)](https://skillicons.dev)
